@@ -1,5 +1,9 @@
 # Neighborhoods near MSU
 
+[![Open app](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://find-neighborhood-near-msu.streamlit.app/)
+
+[Open the live app](https://find-neighborhood-near-msu.streamlit.app/) — no installation needed.
+
 This project helps international families compare housing, schools and recorded crime near MSU.
 It covers 172 Census block groups in Lansing, East Lansing, Okemos and Haslett.
 At least 70% of each block group's area is within 10 km of MSU Main Library.
