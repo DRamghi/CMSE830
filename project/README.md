@@ -5,20 +5,42 @@ It covers 172 Census block groups in Lansing, East Lansing, Okemos and Haslett.
 At least 70% of each block group's area is within 10 km of MSU Main Library.
 Whole boundaries are kept. Township-labeled groups are excluded.
 
-## Run
+## Run locally
 
 Use Python 3.11 or newer.
 
 ```bash
+git clone https://github.com/DRamghi/CMSE830.git
+cd CMSE830/project
 python -m pip install -r requirements.txt
 streamlit run app.py
 ```
 
 The app shows Preprocessing, Analysis and Ready. It creates missing results and rebuilds results when inputs or calculation code change. Otherwise it uses saved results. No API key or download is needed. Preprocessing and analysis together take about one second on the development computer; map loading takes longer.
 
-## Files for GitHub
+## Run in a web browser
 
-Keep these 19 files. The input data are small local extracts, not full national or statewide downloads.
+GitHub stores the code. Streamlit Community Cloud runs the app and provides a public web address.
+Visitors do not need to install Python or keep this computer running.
+
+To deploy, sign in at [Streamlit Community Cloud](https://share.streamlit.io/) with GitHub and create an app:
+
+- Repository: `DRamghi/CMSE830`
+- Branch: `main`
+- Main file path: `project/app.py`
+- Python version: `3.12` in Advanced settings
+
+Deploy the app, then share the generated `streamlit.app` address.
+The app uses `project/requirements.txt` and the seven input files. No API secrets are needed.
+It builds the processed files on its first run.
+To use the included theme on Community Cloud, place a copy of `project/.streamlit/config.toml`
+at `.streamlit/config.toml` in the repository root.
+
+See the [official deployment guide](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy).
+
+## Project files
+
+These 19 files are in the `project` folder. The input data are small local extracts, not full national or statewide downloads.
 
 ```text
 .gitignore
