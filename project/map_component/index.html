@@ -1,0 +1,64 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+html,body {margin:0;overflow:hidden;} iframe {width:100%;height:100%;border:0;display:block;}
+</style></head><body><iframe id="map" title="Neighborhood map" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+<script>
+// Keep pan and zoom state in the browser. Send only block-group clicks to Python.
+const frame = document.getElementById('map');
+let html = '', view = null, selected = null, ready = false;
+// Restore the same tab view even when a filter change recreates the outer component.
+const storageKey = 'msu-family-map-state';
+try {
+  const saved = JSON.parse(sessionStorage.getItem(storageKey) || 'null');
+  if(saved) {view = saved.view; selected = saved.selected;}
+} catch(error) { /* Start with the default view if saved state is invalid or browser storage is blocked. */ }
+function remember() {
+  try {sessionStorage.setItem(storageKey, JSON.stringify({view,selected}));} catch(error) {}
+}
+function send(type, extra) {
+  const message = {isStreamlitMessage:true, type:type};
+  if (extra) {
+    for (const key in extra) {
+      message[key] = extra[key];
+    }
+  }
+  window.parent.postMessage(message, '*');
+}
+function resize() {
+  const top = window.frameElement ? window.frameElement.getBoundingClientRect().top : 180;
+  const height = Math.max(260, window.parent.innerHeight - top - 20);
+  document.body.style.height = height + 'px';
+  const details = window.parent.document.querySelector('.st-key-details');
+  if(details) {
+    // The details panel starts above the map. Calculate remaining height from the map start.
+    const detailHeight = Math.max(260, window.parent.innerHeight - details.getBoundingClientRect().top - 20);
+    details.style.setProperty('height', detailHeight + 'px', 'important');
+    details.style.setProperty('max-height', detailHeight + 'px', 'important');
+  }
+  send('streamlit:setFrameHeight', {height});
+  frame.contentWindow.postMessage({type:'resize-map'}, '*');
+}
+function restore() {frame.contentWindow.postMessage({type:'restore-map',view,selected}, '*');}
+window.addEventListener('message', function(event) {
+  const msg = event.data;
+  if (event.source === window.parent && msg.type === 'streamlit:render') {
+    const args = msg.args;
+    // Do not overwrite the saved user view with the default center while a new layer is loading.
+    if (html !== args.html) {ready = false; html = args.html; frame.srcdoc = html;}
+    else restore();
+    resize();
+  }
+  if (event.source !== frame.contentWindow) return;
+  if (msg.type === 'map-ready') {restore(); resize(); ready = true;}
+  if (msg.type === 'map-view' && ready) {view = msg.view; remember();}
+  if (msg.type === 'block-click') {
+    selected = msg.geoid;
+    remember();
+    send('streamlit:setComponentValue',{value:{geoid:selected},dataType:'json'});
+  }
+});
+window.addEventListener('resize',resize);
+// Resize the map with the parent view to avoid blank space or extra page height.
+window.parent.addEventListener('resize',resize);
+send('streamlit:componentReady',{apiVersion:1});
+</script></body></html>

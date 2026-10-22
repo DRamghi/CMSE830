@@ -1,0 +1,33 @@
+# Upload only the 19 project files listed in README.md.
+# Everything else stays local, including outputs, tests, slides and backups.
+/*
+!/.gitignore
+!/README.md
+!/requirements.txt
+!/app.py
+!/prepare.py
+!/housing.py
+!/map_utils.py
+!/dashboard.py
+!/about_page.py
+!/analysis.ipynb
+!/.streamlit/
+!/map_component/
+!/data/
+
+/.streamlit/*
+!/.streamlit/config.toml
+
+/map_component/*
+!/map_component/index.html
+
+/data/*
+!/data/input/
+/data/input/*
+!/data/input/census.csv
+!/data/input/block_groups.geojson
+!/data/input/schools.csv
+!/data/input/districts.geojson
+!/data/input/crime.csv
+!/data/input/crime_coverage.csv
+!/data/input/gun_incidents.csv
