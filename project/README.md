@@ -11,8 +11,9 @@ It covers 172 Census block groups near MSU in Lansing, East Lansing, Okemos and 
 
 - **Schools are a comparison reference, not a confirmed school assignment.** For each block group, the app uses all schools in the school district containing its center point. The school score is their mean available OverallIndex. This does not confirm which district or school an individual home or child would be assigned to.
 - **Rent combines housing types and sizes.** It is the Census median gross rent for rental homes paying cash rent, without separating apartments from houses or small homes from large homes. It is not a comparison of similar-sized homes or a current listing price.
-- **Missing data do not mean zero.** The map shows missing values in gray. Crime comparisons in the notebook use only Lansing and East Lansing because Okemos and Haslett have incomplete coverage.
-- Census values are survey estimates. Recorded crime counts are published records, not population-adjusted crime rates. GVA gun incidents are a separate map layer and are not added to police counts.
+- **Missing data:** The datasets used in this analysis contain missing values, shown in gray on the map. Crime comparisons in the notebook use only Lansing and East Lansing because Okemos and Haslett have incomplete coverage.
+- **Census estimates:** The ACS statistics are based on a sample survey and have sampling error. They are estimates, not exact values for every household or resident.
+- Recorded crime counts are published records, not population-adjusted crime rates. GVA gun incidents are a separate map layer and are not added to police counts.
 
 ## Run locally
 
